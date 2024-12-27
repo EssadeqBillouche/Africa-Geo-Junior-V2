@@ -3,6 +3,15 @@ class Continent{
     private $name;
     private $continentId;
 
+    public function EditContinent(){
+
+    }
+    public function AddCountinet(){
+
+    }
+    public function DeleteContinent(){
+
+    }
     public function __construct($name, $continentId){
         $this->name = $name;
         $this->continentId = $continentId;

@@ -13,6 +13,17 @@ class city{
         $this->CityDescription = $CityDescription;
         $this->CityCountryID = $CityCountryID;
     }
+//    methods
+
+    public function AddCity(){
+
+    }
+    public function EditCity(){
+
+    }
+    public function DeleteCity(){
+
+    }
 
     public function getCityName(){
         return $this->CityName;

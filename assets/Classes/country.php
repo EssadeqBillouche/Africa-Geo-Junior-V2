@@ -13,6 +13,15 @@ class country{
         $this->countrylangue = $countrylangue;
         $this->CountryCountinentID = $countryCountinentID;
     }
+    public function AddCountry(){
+
+    }
+    public function EditCountry(){
+
+    }
+    public function DeleteCountry(){
+
+    }
     public function getCountryId(){
         return $this->countryId;
     }
