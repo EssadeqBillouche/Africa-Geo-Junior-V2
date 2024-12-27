@@ -48,23 +48,7 @@ $result = mysqli_query($connection, $query);
     <div class="container">
         <h1 class="text-center mb-4">Cities</h1>
         <div class="row">
-            <?php
-            if ($result && mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="col-md-4">';
-                    echo '  <div class="card city-card">';
-                    echo '      <div class="city-card-header">' . $row['name'] . '</div>'; // City Name
-                    echo '      <div class="city-card-body">';
-                    echo '          <p><strong>Type:</strong> ' . $row['type'] . '</p>';
-                    echo '          <p><strong>Description:</strong> ' . $row['Description'] . '</p>'; // Description
-                    echo '      </div>';
-                    echo '  </div>';
-                    echo '</div>';
-                }
-            } else {
-                echo '<p class="text-danger">No cities found for this country.</p>';
-            }
-            ?>
+           
         </div>
         <div class="text-center mt-4">
             <a href="index.php" class="btn btn-secondary">Back to Countries</a>

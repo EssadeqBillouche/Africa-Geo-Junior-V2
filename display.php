@@ -124,62 +124,6 @@
 <body>
     <div class="container my-5">
         <div class="row">
-
-            <?php
-            // Database connection
-            $host = 'localhost';
-            $user = 'root';
-            $password = '';
-            $database = 'africadataexplorer';
-
-            $connection = mysqli_connect($host, $user, $password, $database);
-
-            // Check connection
-            if (!$connection) {
-                die('Database connection failed: ' . mysqli_connect_error());
-            }
-
-            // Query to fetch countries
-            $query = "SELECT name, population,  langue FROM countries";
-            $result = mysqli_query($connection, $query);
-
-            // Check if query was successful
-            if ($result) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="col-md-4">';
-                    echo '  <div class="card country-card">';
-                    echo '      <div class="country-card-header">';
-                    echo '          <h3>' . $row['name'] . '</h3>';
-                    // echo '          <img src="' . $row['flag_url'] . '" alt="' . $row['name'] . ' Flag" class="country-flag">';
-                    echo '      </div>';
-                    echo '      <div class="country-card-body">';
-                    echo '          <div class="stat-row">';
-                    echo '              <div class="stat-icon"><i class="fas fa-users"></i></div>';
-                    echo '              <div class="stat-label">Population</div>';
-                    echo '              <div class="stat-value">' . $row['population'] . '</div>';
-                    echo '          </div>';
-                    echo '          <div class="stat-row">';
-                    echo '              <div class="stat-icon"><i class="fas fa-globe"></i></div>';
-                    echo '              <div class="stat-label">Continent</div>';
-                    echo '              <div class="stat-value">' . 'AFRICA' . '</div>';
-                    echo '          </div>';
-                    echo '          <div class="stat-row">';
-                    echo '              <div class="stat-icon"><i class="fas fa-language"></i></div>';
-                    echo '              <div class="stat-label">Languages</div>';
-                    echo '              <div class="stat-value">' . $row['langue'] . '</div>';
-                    echo '          </div>';
-                    echo '      </div>';
-                    echo '  </div>';
-                    echo '</div>';
-                }
-            } else {
-                echo '<p class="text-danger">Error fetching data: ' . mysqli_error($connection) . '</p>';
-            }
-
-            // Close database connection
-            mysqli_close($connection);
-            ?>
-
         </div>
     </div>
 

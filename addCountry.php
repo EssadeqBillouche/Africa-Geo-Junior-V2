@@ -1,6 +1,4 @@
-<?php
-require_once "databaseConnaction.php";
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
