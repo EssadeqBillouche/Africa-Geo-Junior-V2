@@ -17,8 +17,9 @@ class DataBaseConnaction {
             $dsn = "mysql:host={$this->host};dbname={$this->db};";
             $this->connection = new PDO($dsn, $this->username, $this->password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("Database connection failed: " . $e->getMessage());
+        }
+        catch (PDOException $e) {
+            die("Database not connecting with this error *(Makhdamach)" . $e->getMessage());
         }
         return $this->connection;
     }

@@ -1,4 +1,5 @@
 <?php
+require "dbConn.php";
 class country{
     private $countryId;
     private $CountryName;

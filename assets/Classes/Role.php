@@ -1,4 +1,5 @@
 <?php
+require "dbConn.php";
 class role{
     private $roleID;
     private $roleName;

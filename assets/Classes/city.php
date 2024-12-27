@@ -1,4 +1,5 @@
 <?php
+require "dbConn.php";
 class city{
     private $CityName;
     private $CityId;
