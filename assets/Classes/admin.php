@@ -1,10 +1,14 @@
 <?php
-include 'dbConn.php';
+class admin{
 
-$ConnectionOpject = new DataBaseConnaction();
-$connectVariable = $ConnectionOpject -> getConnection();
+    public function mangeCountry(){
 
-$stmnt = $connectVariable->query
+    }
+    public function mangeCity(){
 
+    }
+    public function mangeCountinent(){
 
+    }
+}
 ?>
