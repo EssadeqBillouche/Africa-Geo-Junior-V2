@@ -1,6 +1,13 @@
 <?php
-require "dbConn.php";
-class admin{
+spl_autoload_register(function ($class) {
+    require $class . '.php';
+});
+class admin extends person{
+
+    public function __construct($name, $idRole, $email, $password)
+    {
+        parent::__construct($name, $idRole, $email, $password);
+    }
 
     public function mangeCountry(){
 
@@ -9,6 +16,10 @@ class admin{
 
     }
     public function mangeCountinent(){
+
+    }
+    public function login()
+    {
 
     }
 }

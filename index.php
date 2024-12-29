@@ -1,3 +1,15 @@
+<?php
+spl_autoload_register(function ($class) {
+    $baseDir = __DIR__ . '/assets/Classes/';
+    $file = $baseDir . $class . '.php';
+
+    if (file_exists($file)) {
+        require $file;
+    } else {
+        throw new Exception("{$class} not found");
+    }
+});
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -177,7 +189,11 @@
     </header>
 
     <main class="main">
-
+    <?php
+    echo "Hello World!";
+    $newConnectionTest = new DataBaseConnaction();
+    $newConnectionTest->getConnection();
+    ?>
         <!-- Gallery Section -->
         <section id="gallery" class="gallery section">
 

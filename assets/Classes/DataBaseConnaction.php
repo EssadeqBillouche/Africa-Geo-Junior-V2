@@ -1,5 +1,7 @@
 <?php
-
+spl_autoload_register(function ($class) {
+    require $class . '.php';
+});
 class DataBaseConnaction {
     private $host = "localhost";
     private $db = "AfricaV2";

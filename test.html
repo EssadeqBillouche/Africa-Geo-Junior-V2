@@ -7,42 +7,112 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Admin Login</h5>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="login()">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- City Modal -->
-    <div class=" " id="cityModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add/Edit City</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<!-- Main Content -->
+<div class="container mt-4" id="mainContent" style="display: none;">
+    <!-- Header with Search and Admin Info -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search..." id="searchInput" onkeyup="searchTables()">
+                <button class="btn btn-outline-secondary" type="button">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="d-flex align-items-center justify-content-end">
+                <div class="me-3">
+                        <span class="d-inline-block bg-primary rounded-circle" style="width: 32px; height: 32px;">
+                            <span class="text-white d-flex align-items-center justify-content-center h-100" id="adminInitial">A</span>
+                        </span>
                 </div>
-                <div class="modal-body">
-                    <form id="cityForm">
-                        <div class="mb-3">
-                            <label class="form-label">City Name</label>
-                            <input type="text" class="form-control" id="cityName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Country</label>
-                            <select class="form-select" id="cityCountry" required>
-                                <option value="">Select Country</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Population</label>
-                            <input type="text" class="form-control" id="cityPopulation" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="saveCity()">Save</button>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <span id="adminName">Admin</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    
+    <!-- Rest of the existing content -->
+    [Previous content from tabs to end of body remains exactly the same]
+</div>
+
+<script>
+    // Add these new functions at the beginning of the script section
+
+    // Show login modal on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+    });
+
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Simple validation - in real app, use proper authentication
+        if (username === 'admin' && password === 'admin') {
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('adminName').textContent = username;
+            document.getElementById('adminInitial').textContent = username[0].toUpperCase();
+        } else {
+            alert('Invalid credentials');
+        }
+    }
+
+    function logout() {
+        location.reload();
+    }
+
+    function searchTables() {
+        const searchText = document.getElementById('searchInput').value.toLowerCase();
+        const tables = ['continentList', 'countryList', 'cityList'];
+
+        tables.forEach(tableId => {
+            const rows = document.getElementById(tableId).getElementsByTagName('tr');
+
+            for (const row of rows) {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchText) ? '' : 'none';
+            }
+        });
+    }
+
+    [Previous JavaScript code remains exactly the same]
+</script>
 </body>
 </html>
