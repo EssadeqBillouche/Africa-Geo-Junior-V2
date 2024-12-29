@@ -46,12 +46,18 @@ class country {
 
     public function showAllCountries() {
         $stetment = $this->countryConnection;
-        $stetment = $stetment->prepare("SELECT * FROM Pays");
+        $stetment = $stetment->prepare("SELECT * FROM pays");
         $stetment->execute();
         return $stetment->fetchAll();
-
     }
 
+    public function getCountryNameById($countryId) {
+        $stetment = $this->countryConnection;
+        $stetment = $stetment->prepare("SELECT pays_nom FROM pays WHERE pays_id = :id");
+        $stetment->bindValue(":id", $countryId);
+        $stetment->execute();
+        return $stetment->fetch();
+    }
     public function getCountryName() {
         return $this->countryName;
     }

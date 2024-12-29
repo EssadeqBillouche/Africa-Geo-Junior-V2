@@ -23,20 +23,37 @@ class city{
     }
 //    methods
 
-    public function AddCity($name,$type,$description,$countryID,){
+    public function AddCity($name,$type,$description,$countryID){
         $stmnt = $this->CityConnaction;
-        $stmnt = $stmnt -> Prepare("INSERT INTO pays (ville_nom,description,type,fk_pays) VALUES (:name,:description,:type,:fk_pays)");
+        $stmnt = $stmnt -> Prepare("INSERT INTO ville (ville_nom,description,type,fk_pays) VALUES (:name,:description,:type,:fk_pays)");
         $stmnt -> bindParam(':name',$name);
         $stmnt -> bindParam(':description',$description);
         $stmnt -> bindParam(':type',$type);
         $stmnt -> bindParam(':fk_pays',$countryID);
         $stmnt -> execute();
+        header("Location: AdminDashboard.php");
+    }
+    public function ShowAllCity(){
+        $stmnt = $this->CityConnaction;
+        $stmnt = $stmnt ->prepare("SELECT * FROM ville");
+        $stmnt -> execute();
+        return $stmnt -> fetchAll();
     }
     public function EditCity(){
 
     }
-    public function DeleteCity(){
-
+    public function DeleteCity($cityID){
+        try {
+            var_dump($cityID);
+            $sterm = $this->CityConnaction;
+            $sterm = $sterm -> Prepare("DELETE FROM ville WHERE ville_id = :id");
+            $sterm -> bindParam(':id',$cityID);
+            $sterm -> execute();
+            header("Location: AdminDashboard.php");
+            exit();
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
     }
 
     public function getCityName(){

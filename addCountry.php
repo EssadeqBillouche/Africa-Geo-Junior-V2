@@ -21,4 +21,11 @@ if(isset($_POST['submitCountry'])){
     header("location: AdminDashboard.php");
 
 }
+if(isset($_GET['deleteCountry'])){
+    $id = $_GET['deleteCountry'];
+    $country = new Country();
+    $country->deleteCountry($id);
+    header("location: AdminDashboard.php");
+    exit();
+}
 ?>

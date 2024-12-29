@@ -1,6 +1,7 @@
 <?php
 require_once "addContinent.php";
 require_once "addCountry.php";
+require_once "addCity.php";
 
 ?>
 <!DOCTYPE html>
@@ -158,27 +159,15 @@ require_once "addCountry.php";
                                                 <p class="card-text">Country Population : '.htmlspecialchars($result["population"]).'</p>
                                                 <p class="card-text">country Languge : '.htmlspecialchars($result["langue"]).'</p>
                                                 <div class="mt-2">
-                                                    <a href="addCountry.php?Edit='.htmlspecialchars($result["pays_id"]).'" class="btn btn-sm btn-warning me-2">Edit</a>
-                                                    <a href="addCountry.php?Delete='.htmlspecialchars($result["pays_id"]).'" class="btn btn-sm btn-danger">Delete</a>
+                                                    <a href="addCountry.php?EditCountry='.htmlspecialchars($result["pays_id"]).'" class="btn btn-sm btn-warning me-2">Edit</a>
+                                                    <a href="addCountry.php?deleteCountry='.htmlspecialchars($result["pays_id"]).'" class="btn btn-sm btn-danger">Delete</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>';
                                     }
                                     ?>
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title">France</h5>
-                                                <p class="card-text">Code: FR</p>
-                                                <p class="card-text">Continent: Europe</p>
-                                                <div class="mt-2">
-                                                    <a href="edit_country.php?id=2" class="btn btn-sm btn-warning me-2">Edit</a>
-                                                    <a href="delete_country.php?id=2" class="btn btn-sm btn-danger">Delete</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -195,25 +184,39 @@ require_once "addCountry.php";
                             <div class="card-header">
                                 <h5 class="mb-0">Add New City</h5>
                             </div>
+
                             <div class="card-body">
-                                <form action="add_city.php" method="POST">
+                                <form action="addCity.php" method="POST">
                                     <div class="mb-3">
                                         <label class="form-label">City Name</label>
-                                        <input type="text" class="form-control" name="city_name" required>
+                                        <input type="text" class="form-control" name="cityName" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Country</label>
-                                        <select class="form-select" name="country_id" required>
+                                        <select class="form-select" name="selectCountryForCity" required>
                                             <option value="">Select Country</option>
-                                            <option value="1">Japan</option>
-                                            <option value="2">France</option>
+                                            <?php
+                                            $newObj = new country();
+                                            $results = $newObj->showAllCountries();
+                                            foreach ($results as $result) {
+                                                echo '<option value="'.$result['pays_id'].'">'.$result['pays_nom'].'</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Population</label>
-                                        <input type="text" class="form-control" name="population" required>
+                                        <label class="form-label">Type</label>
+                                        <select class="form-select" name="selectcityType" required>
+                                            <option value="">Select Type</option>
+                                            <option value="ville">city</option>
+                                            <option value="capital">capital</option>
+                                        </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Save City</button>
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <input type="text" class="form-control" name="cityDescription" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" name="SubmitCity">Save City</button>
                                 </form>
                             </div>
                         </div>
@@ -227,19 +230,29 @@ require_once "addCountry.php";
                             <div class="card-body">
                                 <div class="row g-3">
                                     <!-- Sample City Cards -->
-                                    <div class="col-md-6">
+                                    <?php
+                                    $newObj = new city();
+                                    $results = $newObj->showAllCity();
+                                    foreach ($results as $result) {
+                                        $newObj = new country();
+                                        $newObj = $newObj->getCountryNameById($result["fk_pays"]);
+                                        $newObj["pays_nom"];
+                                        echo '<div class="col-md-6">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h5 class="card-title">Tokyo</h5>
-                                                <p class="card-text">Country: Japan</p>
-                                                <p class="card-text">Population: 37,400,068</p>
+                                                <h5 class="card-title">'.htmlspecialchars($result["ville_nom"]).'</h5>
+                                                <p class="card-text">Country: '.$newObj["pays_nom"].'</p>
+                                                <p class="card-text">description: '.htmlspecialchars($result["description"]).'</p>
+                                                <p class="card-text">Type: '.htmlspecialchars($result["type"]).'</p>
                                                 <div class="mt-2">
-                                                    <a href="edit_city.php?id=1" class="btn btn-sm btn-warning me-2">Edit</a>
-                                                    <a href="delete_city.php?id=1" class="btn btn-sm btn-danger">Delete</a>
+                                                    <a href="addCity.php?EditCity='.$result["ville_id"].'" class="btn btn-sm btn-warning me-2">Edit</a>
+                                                    <a href="addCity.php?DeleteCity='.$result["ville_id"].'" class="btn btn-sm btn-danger">Delete</a>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>';
+                                    }
+                                    ?>
                                     <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-body">
