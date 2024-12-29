@@ -1,5 +1,7 @@
 <?php
-require "dbConn.php";
+spl_autoload_register(function ($class) {
+    require $class . '.php';
+});
 class city{
     private $CityName;
     private $CityId;
@@ -7,17 +9,28 @@ class city{
     private $CityDescription;
     private $CityCountryID;
 
-    function __construct($CityName,$CityId,$CityType,$CityDescription,$CityCountryID){
-        $this->CityName = $CityName;
-        $this->CityId = $CityId;
-        $this->CityType = $CityType;
-        $this->CityDescription = $CityDescription;
-        $this->CityCountryID = $CityCountryID;
+    private $CityConnaction;
+
+    function __construct(){
+        try {
+            $Connaction = new DataBaseConnaction();
+            $Connaction = $Connaction->getConnection();
+            $this->CityConnaction = $Connaction;
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+
     }
 //    methods
 
-    public function AddCity(){
-
+    public function AddCity($name,$type,$description,$countryID,){
+        $stmnt = $this->CityConnaction;
+        $stmnt = $stmnt -> Prepare("INSERT INTO pays (ville_nom,description,type,fk_pays) VALUES (:name,:description,:type,:fk_pays)");
+        $stmnt -> bindParam(':name',$name);
+        $stmnt -> bindParam(':description',$description);
+        $stmnt -> bindParam(':type',$type);
+        $stmnt -> bindParam(':fk_pays',$countryID);
+        $stmnt -> execute();
     }
     public function EditCity(){
 

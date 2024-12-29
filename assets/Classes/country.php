@@ -1,64 +1,91 @@
 <?php
-require "dbConn.php";
-class country{
+spl_autoload_register(function ($class) {
+    require $class . '.php';
+});
+
+class country {
     private $countryId;
-    private $CountryName;
+    private $countryName;
+    private $countryPopulation;
+    private $countryLangue;
+    private $countryContinentID;
+    private $countryConnection;
 
-    private $CountryPopulation;
-    private $Countrylangue;
-    private $CountryCountinentID;
-    public function __construct($countryId, $countryName, $countryPopulation, $countrylangue, $countryCountinentID){
-        $this->CountryName = $countryName;
+    public function __construct() {
+        try {
+            $obeject = new DataBaseConnaction();
+            $obeject = $obeject->getConnection();
+            $this->countryConnection = $obeject;
+
+        } catch (Exception $e){
+            echo "problem in the country Connection".$e->getMessage();
+        }
+    }
+
+    public function AddCountry($countryName, $countryPopulation, $countryLangue, $countryContinentID) {
+        try {
+            $stetment = $this->countryConnection;
+            $stetment = $stetment->prepare("INSERT INTO Pays (	pays_nom,population,langue,fk_Continent) VALUES (:nom,:population,:langue,:continent)");
+            $stetment->bindValue(":nom", $countryName);
+            $stetment->bindValue(":population", $countryPopulation);
+            $stetment->bindValue(":langue", $countryLangue);
+            $stetment->bindValue(":continent", $countryContinentID);
+            $stetment->execute();
+        } catch (Exception $e) {
+            echo "error problem from class country function addcountry " . $e->getMessage();
+        }
+    }
+
+    public function EditCountry() {
+
+    }
+
+    public function DeleteCountry($countryId) {
+
+    }
+
+    public function showAllCountries() {
+        $stetment = $this->countryConnection;
+        $stetment = $stetment->prepare("SELECT * FROM Pays");
+        $stetment->execute();
+        return $stetment->fetchAll();
+
+    }
+
+    public function getCountryName() {
+        return $this->countryName;
+    }
+
+    public function getCountryPopulation() {
+        return $this->countryPopulation;
+    }
+
+    public function getCountryLangue() {
+        return $this->countryLangue;
+    }
+
+    public function getCountryContinentID() {
+        return $this->countryContinentID;
+    }
+
+    public function setCountryId($countryId) {
         $this->countryId = $countryId;
-        $this->countryPopulation = $countryPopulation;
-        $this->countrylangue = $countrylangue;
-        $this->CountryCountinentID = $countryCountinentID;
-    }
-    public function AddCountry(){
-
-    }
-    public function EditCountry(){
-
-    }
-    public function DeleteCountry(){
-
-    }
-    public function getCountryId(){
-        return $this->countryId;
-    }
-    public function getCountryName(){
-        return $this->CountryName;
-    }
-    public function getCountryPopulation(){
-        return $this->CountryPopulation;
     }
 
-    public function getCountryLangue(){
-        return $this->getcountrylangue();
-    }
-    public function getCountryCountinentID(){
-        return $this->CountryCountinentID;
+    public function setCountryName($countryName) {
+        $this->countryName = $countryName;
     }
 
-//    setters
-
-    public function setCountryId($countryId){
-        $this->countryId = $countryId;
-    }
-    public function setCountryName($countryName){
-        $this->CountryName = $countryName;
-    }
-    public function setCountryPopulation($countryPopulation){
+    public function setCountryPopulation($countryPopulation) {
         $this->countryPopulation = $countryPopulation;
     }
-    public function setCountrylangue($countrylangue){
-        $this->countrylangue = $countrylangue;
-    }
-    public function setCountryCountinentID($countryCountinentID){
-        $this->countryCountinentID = $countryCountinentID;
+
+    public function setCountryLangue($countryLangue) {
+        $this->countryLangue = $countryLangue;
     }
 
+    public function setCountryContinentID($countryContinentID) {
+        $this->countryContinentID = $countryContinentID;
+    }
 }
-
-
 ?>

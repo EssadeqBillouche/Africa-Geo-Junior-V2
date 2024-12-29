@@ -1,5 +1,4 @@
 <?php
-
 spl_autoload_register(function ($class) {
     $baseDir = __DIR__ . '/assets/Classes/';
     $file = $baseDir . $class . '.php';
@@ -11,17 +10,24 @@ spl_autoload_register(function ($class) {
     }
 });
 
-try {
-    if(isset($_POST["addCountient"]) && !empty($_POST["continent_name"])){
-        $continentName = $_POST["continent_name"];
+    if (isset($_POST["addContinentSubmit"])) {
+        $continentName = trim($_POST["continent_name"]);
         $newContinent = new Continent();
-        $newContinent->AddCountinet($continentName);
-        header("Location: index.php");
-    }else{
-            echo "problem addCountient";
+        $newContinent->AddContinent($continentName);
+        header("Location: AdminDashboard.php");
+        exit();
     }
-} catch (\mysql_xdevapi\Exception $e) {
-    echo $e->getMessage();
-}
 
+    if(isset($_GET['Edit'])){
+        $continentId = $_GET['Edit'];
+        header("location: AdminDashboard.php");
+        exit();
+    }
+    if(isset($_GET['DeleteContinent'])){
+        $continentId = $_GET['DeleteContinent'];
+        $newObj = new Continent();
+        $newObj->DeleteContinent($continentId);
+        header("location: AdminDashboard.php");
+        exit();
+    }
 ?>
